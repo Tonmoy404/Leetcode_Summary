@@ -1,0 +1,1 @@
+module.exports.routes= ["src/module/**/*.routes.js"]
