@@ -1,5 +1,3 @@
-const { default: axios } = require("axios");const currentDate = new Date();
-console.log(currentDate);
 
 
 async function fetchStats(req, res){
