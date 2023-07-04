@@ -1,9 +1,8 @@
-
+const axios = require('axios')
 
 async function fetchStats(req, res){
     try{
         const { username } = req.body
-        const API = `https://leetcode.com/graphql/`
 
         const query = `\n    query userProblemsSolved($username: String!) {\n  allQuestionsCount {\n    difficulty\n    count\n  }\n  matchedUser(username: $username) {\n    problemsSolvedBeatsStats {\n      difficulty\n      percentage\n    }\n    submitStatsGlobal {\n      acSubmissionNum {\n        difficulty\n        count\n      }\n    }\n  }\n}\n    `
         
@@ -11,7 +10,7 @@ async function fetchStats(req, res){
 
         console.log("variables", variables)
 
-        const resData = await axios.post(API, {query, variables})
+        const resData = await axios.post(process.env.API, {query, variables})
         console.log(resData.data)
 
         res.status(200).send({okay: resData.data.data.matchedUser.submitStatsGlobal.acSubmissionNum})
@@ -30,13 +29,12 @@ async function recentStats(req, res){
         console.log(currentDate);
         
         const { username } = req.body
-        const API = `https://leetcode.com/graphql/`
 
         const query = `\n    query recentAcSubmissions($username: String!, $limit: Int!) {\n  recentAcSubmissionList(username: $username, limit: $limit) {\n    id\n    title\n    titleSlug\n    timestamp\n  }\n}\n`    
 
         const variables =  {username, limit: 100}
 
-        const resData = await axios.post(API, { query, variables})
+        const resData = await axios.post(process.env.API, { query, variables})
         const listData = resData.data.data.recentAcSubmissionList
 
         const arr=[];
