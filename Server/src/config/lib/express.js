@@ -1,6 +1,7 @@
 const path = require('path')
 const express = require('express')
 const  config = require('../index')
+const cors = require('cors')
 
 module.exports = ()=>{
     const app = express();
@@ -8,6 +9,14 @@ module.exports = ()=>{
     app.use(express.json())
     app.set("port", process.env.PORT)
 
+    const corsOptions = {
+        Credential: true,
+        origin: (origin, callback)=>{
+            return callback(null, true)
+        }
+    }
+
+    app.use(cors(corsOptions))
     const globalConfig =  config.getGlobalConfig();
 
     globalConfig.routes.forEach(function (routepath){

@@ -4,8 +4,8 @@ const { fetchStats, recentStats } = require('./summary.controller')
 
 module.exports = (app)=>{
     app.route('/summary')
-        .post(validate(summarySchema), recentStats )
+        .post(validate(summarySchema), fetchStats )
 
     app.route('/stats')
-        .post(validate(summarySchema), fetchStats)
+        .post(validate(summarySchema), recentStats)
 }
