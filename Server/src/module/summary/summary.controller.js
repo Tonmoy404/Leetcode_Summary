@@ -12,12 +12,16 @@ async function fetchStats(req, res){
 
         const resData = await axios.post(process.env.API, {query, variables})
         console.log(resData.data)
-
+        
+        if(resData.data.errors){
+            return res.status(404).send(resData.data.errors[0].message)
+        }
+        
         res.status(200).send({okay: resData.data.data.matchedUser.submitStatsGlobal.acSubmissionNum})
 
     }
     catch(Err){
-        console.log(Err)
+        console.log("hi---->", Err)
         res.status(500).send("Internal Server Error");
     }
 }
